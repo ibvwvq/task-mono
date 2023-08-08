@@ -64,7 +64,8 @@ class Feedback extends Model
                     if($feedback->product_id == $product->id ){
                         // выводим отзыв
                         echo $countRating/$ratings->count() . PHP_EOL;
-                        // пытаюсь загрузить полученный результат в файл csv
+                        // полученный результат в файл csv
+
                         Excel::download((object)$feedback, 'feedback2.csv');
                         return $feedback->id . " - " . $feedback->textFeedback . PHP_EOL;
                     }
