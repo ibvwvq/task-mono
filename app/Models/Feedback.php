@@ -55,14 +55,16 @@ class Feedback extends Model
         foreach ($ratings as $rating){
             $countRating += $rating->numberRating;
         }
-        // проверяем если отзывов больше 10
-        if($feedbacks->count()>10){
+        // проверяем если отзывов больше 10 и если общий рейтинг больше 4
+        if($feedbacks->count()>10 && $countRating/$ratings->count()>4){
             // перебираем нужные товары которые мы нашли ранее и ищем на них отзывы
             foreach ($products as $product){
                 foreach ($feedbacks as $feedback){
-                    if($feedback->product_id == $product->id){
+                    // проверяем
+                    if($feedback->product_id == $product->id ){
                         // выводим отзыв
                         echo $countRating/$ratings->count() . PHP_EOL;
+                        // пытаюсь загрузить полученный результат в файл csv
                         Excel::download((object)$feedback, 'feedback2.csv');
                         return $feedback->id . " - " . $feedback->textFeedback . PHP_EOL;
                     }
